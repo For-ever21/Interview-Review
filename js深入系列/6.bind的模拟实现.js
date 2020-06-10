@@ -1,11 +1,11 @@
 // bind 的模拟实现
 
-// bind() 方法会创建一个新函数。当这个新函数被调用时，
-// bind()的第一个参数讲作为它运行时的this，之后的一序列参数将会在传递的实参前传入作为它的参数
+// *bind() 方法会创建一个新函数。当这个新函数被调用时，
+// *bind()的第一个参数讲作为它运行时的this，之后的一序列参数将会在传递的实参前传入作为它的参数
 
-// 两个特点
-// 1,返回一个函数
-// 2,可以传入参数
+// ?两个特点
+// *1,返回一个函数
+// *2,可以传入参数
 
 var foo = {
   value: 1
@@ -24,8 +24,7 @@ let bindFoo = bar.bind(foo, 'durant');
 
 // bindFoo(18);
 
-// 手写bind的模拟实现
-
+// *手写bind的模拟实现
 Function.prototype.bindDzh = function(context) {
   if (typeof this !== "function") {
     throw new Error('这是针对函数调用的bind方法')
@@ -45,9 +44,6 @@ Function.prototype.bindDzh = function(context) {
 }
 
 let bindFooDzh = bar.bindDzh(foo, 'durant')
-// bindFooDzh(19)
-// console.log("bindFooDzh", bindFooDzh(19))
-
 
 Function.prototype.bindDzh2 = function (context) {
   if (typeof this !== "function") {
@@ -64,7 +60,6 @@ Function.prototype.bindDzh2 = function (context) {
   fn.prototype = new fnop();
   return fn
 }
-
 
 Function.prototype.bindDzh3 = function(context) {
   var self = this;

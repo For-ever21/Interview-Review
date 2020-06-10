@@ -33,7 +33,7 @@ function unique2(array) {
 console.log(unique2(array))
 
 // *3.排序后去重
-// concat 的作用就是为了复制一份原数组，不会影响到原数组
+// * concat 的作用就是为了复制一份原数组，不会影响到原数组
 function unique3(array) {
   var res = []
   var sortArray = array.concat().sort();

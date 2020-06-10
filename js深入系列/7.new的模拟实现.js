@@ -1,7 +1,7 @@
 // new的模拟实现
 
-// *一句话介绍new：
-// new运算符创建一个用户定义的对象类型的实例或具有构造函数的内置对象类型之一
+// ?一句话介绍new：
+// *new运算符创建一个用户定义的对象类型的实例或具有构造函数的内置对象类型之一
 function Person (name, age) {
   this.name = name;
   this.age = age;

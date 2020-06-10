@@ -9,9 +9,10 @@ var foo = {
 function bar() {
   console.log("bar -> this.value", this.value)
 }
+
 // bar.call(foo)
 
-// 最简版
+// *最简版
 Function.prototype.call1 = function(context) {
   console.log(this)
   context.fn = this;
@@ -19,7 +20,7 @@ Function.prototype.call1 = function(context) {
   delete context.fn;
 }
 
-// bar.callBY(foo)
+// bar.call1(foo)
 
 // *传入的参数不固定，怎么办
 Function.prototype.call2 = function(context) {
@@ -34,6 +35,7 @@ Function.prototype.call2 = function(context) {
 }
 
 // * this参数可以传null,走window，函数是可以有返回值的
+
 Function.prototype.call3 = function(context) {
   var context = context || window;
   var args = [];
@@ -45,15 +47,7 @@ Function.prototype.call3 = function(context) {
   return results
 }
 
-
-
-
-
 // 自己手写的call函数
-
-
-
-// dzh.call(null);
 
 Function.prototype.callDzh = function(context) {
   context = context || window;
@@ -63,7 +57,7 @@ Function.prototype.callDzh = function(context) {
   for(let i = 1; i < arguments.length; i++) {
     args.push(`arguments[${i}]`)
   }
-  // 这里args 会调用array。tostring的方法
+  // 这里args 会调用array.tostring的方法
   console.log(args)
   let result = eval('context.fn('+ args +')');
   delete context.fn;
@@ -103,14 +97,9 @@ Function.prototype.callDzh2 = function (context, ...args) {
 }
 
 
+// *apply的模拟实现
 
-// bar.callDzh(foo)
-// dzh.callDzh(null)
-// console.log("dzh.callDzh(bibao, '12', '32')", dzh.callDzh(bibao, '12', '32'))
-
-
-// apply的模拟实现
-Function.prototype.apply2 = function(context, arr) {
+Function.prototype.apply1 = function(context, arr) {
   context = context || window;
   var args = [];
   var result;
@@ -127,7 +116,7 @@ Function.prototype.apply2 = function(context, arr) {
   return result
 }
 
-Function.prototype.applyDzh2 = function (context, arr) {
+Function.prototype.applyDzh1 = function (context, arr) {
   context = context || window;
   var handler = Symbol();
   var result;
@@ -145,25 +134,4 @@ Function.prototype.applyDzh2 = function (context, arr) {
   return result;
 }
 
-var val = 1;
-
-var bibao = {
-  val: 2
-}
-
-
-function dzh(name, age) {
-  console.log("dzh -> this.val", this.val)
-  return {
-    value: this.val,
-    name: name,
-    age: age
-  }
-}
-
-// dzh.apply(null)
-dzh.applyDzh2(bibao)
-// console.log("dzh.callDzh(bibao, '12', '32')", dzh.apply2(bibao, ['12', '32']))
-
-
-
+bar.applyDzh1(foo)
