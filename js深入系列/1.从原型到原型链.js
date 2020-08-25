@@ -1,7 +1,9 @@
 // javascript深入系列之 从原型到原型链
+
 function Person (){}
 
 var person = new Person()
+
 console.log("Person -> person", person.prototype)
 console.log(Person.__proto__ === Person.prototype) // Person.prototype = 实例原型
 
@@ -32,4 +34,3 @@ console.log(Object.getPrototypeOf(person) === Person.prototype)
 // ?原型链
 // *那Object.prototype的原型指向为null
 // *由__proto__相互关联的原型组成的链状结构就是指原型链
-

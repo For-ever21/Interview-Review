@@ -6,8 +6,8 @@ var foo = {
   value: 1
 };
 
-function bar() {
-  console.log("bar -> this.value", this.value)
+function bar(ss) {
+  console.log("bar -> this.value", this.value + ';模拟实现方法:' + ss)
 }
 
 // bar.call(foo)
@@ -67,7 +67,7 @@ Function.prototype.callDzh = function(context) {
 
 
 // eg2 手写call函数
-Function.prototype.callDzh2 = function (context, ...args) {
+Function.prototype.callDzh2 = function (context) { // ...args
   // let handler=Symbol();// 生成一个唯一的值，用来作为要绑定对象的属性key 代替fn
   // 如果第一个参数为引用类型或者null 类型的判断
   //   if(typeof context==='object') {
@@ -95,6 +95,23 @@ Function.prototype.callDzh2 = function (context, ...args) {
   delete context.fn;
   return result
 }
+
+Function.prototype.callDzh3 = function(context) { // ...args
+  var handle = Symbol();
+  context = context || window;
+  context.handle = this
+  // var result = context.handle(...args)
+  var args = [];
+  var result = null;
+  for (var i = 1; i < arguments.length; i++) {
+    args.push('arguments[' + i + ']')
+  }
+  result = eval('context.handle(' + args + ')')
+  delete context.handle
+  return result
+}
+
+bar.callDzh3(foo, 'callDzh3')
 
 
 // *apply的模拟实现
@@ -134,4 +151,18 @@ Function.prototype.applyDzh1 = function (context, arr) {
   return result;
 }
 
-bar.applyDzh1(foo)
+Function.prototype.applyDzh2 = function (context, arr) {
+  context = context || window;
+  var handle = Symbol();
+  var result;
+  context.handle = this;
+  if (!arr) {
+    result = context.handle()
+  } else {
+    result = context.handle(...arr)
+  }
+  delete context.handle
+  return result
+}
+
+bar.applyDzh2(foo, ['applyDzh2'])

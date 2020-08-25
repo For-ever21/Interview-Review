@@ -74,5 +74,18 @@ Function.prototype.bindDzh3 = function(context) {
   return fn;
 }
 
+Function.prototype.bindDzh4 = function(context) {
+  var self = this;
+  var args = Array.prototype.slice.call(arguments, 1); // 取下标1之后的参数
+  var fnop = function() {};
+  var fn = function () {
+    var bindArgs = Array.prototype.slice.call(arguments); // 取所有参数
+    return self.apply(this instanceof fn ? this : context, arg.concat(bindArgs));
+  }
+  fnop.prototype = this.prototype
+  fn.prototype = new fnop();
+  return fn;
+}
+
 var bindDzh2Foo = bar.bindDzh3(foo, 'mahuateng');
 console.log("bindDzh2Foo", bindDzh2Foo(23749));
